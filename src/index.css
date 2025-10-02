@@ -2,3 +2,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
 @import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-primary: #000000;      /* Black */
+  --color-primary-light: #1a1a1a;
+  --color-primary-dark: #0d0d0d;
+
+  --color-secondary: #ffd700;    /* Gold */
+  --color-secondary-light: #ffecb3;
+  --color-secondary-dark: #b8860b;
+
+  --color-gray-100: #9ca4ab;
+  --color-gray-200: #f3f4f6;
+
+  /* Fonts */
+  --font-dm-sans: DM Sans, sans-serif;
+  --font-bebas: "Bebas Neue", sans-serif;
+
+  /* Breakpoints */
+  --breakpoint-xs: 480px;
+
+  /* Background Images */
+  --background-image-hero-pattern: url("/hero-bg.png");
+}
+
+@utility text-gold-gradient {
+  @apply bg-gradient-to-r from-secondary to-yellow-400 bg-clip-text text-transparent;
+}
+
+@utility gold-border {
+  @apply border-2 border-secondary;
+}
