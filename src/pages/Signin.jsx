@@ -5,10 +5,10 @@ import { FaUser, FaLock } from "react-icons/fa";
 const Signin = () => {
   return (
     <div className="bg-gradient-to-br from-primary-dark via-secondary to-secondary-dark p-10 min-h-screen">
-      <div className="text-primary-light bg-secondary-light rounded-2xl w-[70%] mx-auto text-center p-6 md:w-[50%]">
+      <div className="text-primary-light bg-secondary-light rounded-2xl w-[70%] mx-auto text-center p-6 lg:w-[50%]">
         <h1 className="text-3xl font-bold mb-3">Welcome Back</h1>
         <p className="mb-5">Sign in to your account to continue</p>
-        <form action="" className="p-4 text-left ">
+        <form action="" className="p-2 text-left ">
           <span className="font-bold block">Email</span>
           <input
             type="email"
@@ -16,7 +16,7 @@ const Signin = () => {
             className="block p-2 border border-secondary-dark focus:outline-none focus:ring-2 focus:ring-secondary mb-2 rounded w-full"
           />
 
-          <span>Password</span>
+          <span className="font-bold block">Password</span>
           <input
             type="password"
             className="block p-2 border border-secondary-dark focus:outline-none focus:ring-2 focus:ring-secondary mb-2 rounded w-full"
