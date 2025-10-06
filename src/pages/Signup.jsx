@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../supabase-client";
+import { FaUser, FaLock, FaEye } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -9,27 +11,74 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
 
+  const [pswdVisibility, setPswdVisibilty] = useState("")
+  const [confirmPswdVisibility, setConfirmPswdVisibilty] = useState("")
+
+  const handlePswdVisibility = () =>{
+    setPswdVisibilty(!pswdVisibility)
+    
+  }
+  const handleConfirmPswdVisibility = () =>{
+    
+    setConfirmPswdVisibilty(!confirmPswdVisibility)
+  }
+
+  const navigate = useNavigate();
+
   const handleSignup = async (e) => {
     e.preventDefault();
+
+    // Check if password and confirm password are the same
 
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
+    // Create the user in Supabase Auth
 
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
-      options: {
-        data: { name, role },
-      },
     });
 
     if (error) {
       alert(error.message);
-    } else {
-      alert("Sign-up successful! Check your email for a confirmation link.");
-      console.log("User signed in with role:", role);
+      return;
+    }
+
+    const user = data.user;
+
+    // Store additional info in custom users table
+    if (user) {
+      const { error: insertError } = await supabase.from("profile").insert([
+        {
+          id: user.id,
+          name,
+          role,
+          email,
+        },
+      ]);
+
+      if (data.user) {
+        const { data: profile } = await supabase
+          .from("profile")
+          .select("role")
+          .eq("id", data.user.id)
+          .single();
+
+        if (profile?.role === "provider") {
+          navigate("/provider-dashboard");
+        } else {
+          navigate("/customer-dashboard");
+        }
+      }
+
+      if (insertError) {
+        alert(insertError.message);
+      } else {
+        alert("Sign-up successful! Check your email for a confirmation link.");
+        console.log("User signed in with role:", role);
+      }
     }
   };
 
@@ -40,25 +89,37 @@ const Signup = () => {
         <p className="mb-5">
           Join our platform to start booking or providing services
         </p>
-        <form onSubmit={handleSignup} className="p-2 text-left ">
+        <form
+          onSubmit={handleSignup}
+          autoComplete="off"
+          className="p-2 text-left "
+        >
           <span className="font-bold block">Full Name</span>
-          <input
-            type="text"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            placeholder="Enter your full names"
-            className="block p-2 border border-secondary-dark focus:outline-none focus:ring-2 focus:ring-secondary mb-2 rounded w-full"
-            required
-          />
+          <div className="flex items-center rounded-xl border border-secondary-dark p-2 mb-2 w-full">
+            <FaUser className="text-gray-500 mr-2" />
+            <input
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              placeholder="Enter your full names"
+              className="block outline-none flex-1"
+              required
+            />
+          </div>
+
           <span className="font-bold block">Email</span>
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder="Enter your email address"
-            className="block p-2 border border-secondary-dark focus:outline-none focus:ring-2 focus:ring-secondary mb-2 rounded w-full"
-            required
-          />
+          <div className="flex items-center rounded-xl border border-secondary-dark p-2 mb-2 w-full">
+            <MdEmail className="text-gray-500 mr-2" />
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="Enter your email address"
+              className="outline-none bg-transparent"
+              required
+            />
+          </div>
+
           <span className="font-bold block">I want to:</span>
           <div>
             <label>
@@ -86,23 +147,34 @@ const Signup = () => {
               Provide Services (Service provider)
             </label>
           </div>
+
           <span className="font-bold block">Password</span>
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="Enter password"
-            className="block p-2 border border-secondary-dark focus:outline-none focus:ring-2 focus:ring-secondary mb-2 rounded w-full"
-            required
-          />
+          <div className="flex items-center rounded-xl border border-secondary-dark p-2 mb-2 w-full">
+            <FaLock className="text-gray-500 mr-2" />
+            <input
+              type={pswdVisibility ? "text" :"password"}
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Enter password"
+              className="bg-transparent outline-none flex-1"
+              required
+            />
+            <FaEye onClick={handlePswdVisibility} className={pswdVisibility ? "text-secondary-dark" : "text-black"}/>
+          </div>
+
           <span className="font-bold block">Confirm Password</span>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
-            className="block p-2 border border-secondary-dark focus:outline-none focus:ring-2 focus:ring-secondary mb-2 rounded w-full"
-            required
-          />
+          <div className="flex items-center rounded-xl border border-secondary-dark p-2 mb-2 w-full">
+            <FaLock className="text-gray-500 mr-2" />
+            <input
+              type={confirmPswdVisibility ? "text" : "password"}
+              value={confirmPassword}
+              onChange={(event) => setConfirmPassword(event.target.value)}
+              placeholder="Enter password"
+              className="bg-transparent outline-none flex-1"
+              required
+            />
+            <FaEye onClick={handleConfirmPswdVisibility} className={confirmPswdVisibility ? "text-secondary-dark" : "text-black"}/>
+          </div>
           <button
             type="submit"
             className="block mt-4 p-2 border-white mb-2 rounded w-full bg-primary text-secondary font-bold"

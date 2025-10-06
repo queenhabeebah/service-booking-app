@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-
-const Header = () => {
+const Header = ({ buttonText, buttonLink, profilePage }) => {
   return (
     <header className="relative min-w-full container p-6 shadow-xl bg-primary-dark text-secondary">
       <nav className="flex items-center justify-between">
         <span className="font-extrabold tracking-tight">EasyBook</span>
-        <div className="gap-4 md:flex">
-          <a href="">Services</a>
-          <a href="">My Bookings</a>
-          <Link to="/signup" className="bg-secondary text-black rounded-xl py-2 px-3 font-bold">
-            Get Started
+        <div className="flex items-center gap-6">
+          <Link
+            to={buttonLink}
+            className="bg-secondary text-black rounded-xl py-2 px-3 font-bold"
+          >
+            {buttonText}
+          </Link>
+          <Link to={profilePage}>
+          <FaUser size={30} className="text-primary bg-secondary-dark p-1 h-10 w-10 rounded-[50%]"/>
           </Link>
         </div>
       </nav>
