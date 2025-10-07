@@ -6,7 +6,7 @@ const Header = ({ buttonText, buttonLink, profilePage }) => {
   return (
     <header className="relative min-w-full container p-6 shadow-xl bg-primary-dark text-secondary">
       <nav className="flex items-center justify-between">
-        <span className="font-extrabold tracking-tight">EasyBook</span>
+        <Link to="/" className="font-extrabold tracking-tight">EasyBook</Link>
         <div className="flex items-center gap-6">
           <Link
             to={buttonLink}

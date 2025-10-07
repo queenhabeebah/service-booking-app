@@ -1,40 +1,61 @@
 import React, { useState } from "react";
 import { supabase } from "../supabase-client";
+import { data } from "react-router-dom";
 
 const CreateService = () => {
   const [serviceName, setServiceName] = useState("");
   const [serviceDesc, setServiceDesc] = useState("");
   const [serviceDuration, setServiceDuration] = useState("");
   const [servicePrice, setServicePrice] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
 
     try {
+      // Get current logged in provider
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser();
+      if (userError) throw userError;
+
+      const user = userData.user;
+
+      if (!user)
+        throw new Error(
+          "You must be signed in as a provider to create a service"
+        );
+
+        // Insert service
       const { data, error } = await supabase
         .from("services")
         .insert([
           {
+            provider_id: user.id, // Link the seervice to provider
             service_name: serviceName,
             description: serviceDesc,
             duration: serviceDuration,
             price: servicePrice,
           },
         ])
+        .select()
         .single();
 
-        if(error) throw error
+      if (error) throw error;
 
-        console.log(data);
-        
+      setMessage("Service created successfully")
 
-        setServiceName("");
-        setServiceDesc("");
-        setServiceDuration("");
-        setServicePrice("");
+      console.log("New service:", data);
+
+      // Reset form
+      setServiceName("");
+      setServiceDesc("");
+      setServiceDuration("");
+      setServicePrice("");
     } catch (error) {
       console.error("Error creating service:", error.message);
-    } 
+    }
+
   };
 
   return (
@@ -84,7 +105,7 @@ const CreateService = () => {
             Create Service
           </button>
         </form>
-        <p></p>
+        {message && <p className="mt-3 font-semibold">{message}</p>}
       </div>
     </div>
   );
