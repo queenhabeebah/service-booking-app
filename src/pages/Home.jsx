@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
 import { Link, useNavigate } from "react-router-dom";
 import { FaClock } from "react-icons/fa";
+import HeroText from "../components/HeroText";
 
 const Home = () => {
   const [serviceList, setServiceList] = useState([]);
@@ -39,13 +40,7 @@ const Home = () => {
     <>
       <section className="max-h-screen h-80 flex items-center justify-center text-white bg-gradient-to-br from-primary via-black to-secondary-dark p-10 rounded-xl shadow-xl">
         <div className="text-center">
-          <h1 className="text-5xl font-extrabold mb-4">
-            Luxury Service Booking
-          </h1>
-
-          <p className="text-xl text-gray-100">
-            Book appointments with trusted professionals. Choose from our wide range of services and find the percte time that works for you.
-          </p>
+          <HeroText />
         </div>
       </section>
       {isLoading ? (
