@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from "../supabase-client";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaClock } from "react-icons/fa";
 
 const Home = () => {
   const [serviceList, setServiceList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
 
   const fetchServices = async () => {
     setIsLoading(true);
@@ -28,6 +30,10 @@ const Home = () => {
   useEffect(() => {
     fetchServices();
   }, []);
+
+  const handleBookNow = (service) => {
+    navigate(`/service-booking/${service.id}`, { state: { service } });
+  };
 
   return (
     <>
@@ -55,7 +61,7 @@ const Home = () => {
           </h2>
 
           <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {serviceList.map((service, id) => (
+            {serviceList.map((service) => (
               <div
                 key={service.id}
                 className="relative bg-gradient-to-tr from-primary via-black to-secondary-dark text-white p-4 rounded-xl"
@@ -69,16 +75,15 @@ const Home = () => {
                   </h3>
                   <p className="my-3">{service.description}</p>
                   <span className="font-light text-gray-100 text-shadow-md flex gap-1 items-center">
-                    {" "}
                     <FaClock size={15} /> {service.duration} min.
                   </span>
                 </div>
-                <Link
-                  to="/service-detail"
+                <button
+                  onClick={() => handleBookNow(service)}
                   className="block text-primary-dark bg-secondary-light rounded-2xl text-center p-2 mt-2 font-bold w-2/3 mx-auto"
                 >
                   Book Now
-                </Link>
+                </button>
               </div>
             ))}
           </div>
