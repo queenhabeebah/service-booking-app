@@ -8,48 +8,72 @@ const ProviderDashboard = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const fetchServices = async () => {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
+      setErrorMessage("");
 
-    const { data, error } = await supabase
-      .from("services")
-      .select("*")
-      .eq("provider_id");
+      // Get the current logged-in provider
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser();
 
-    if (error) throw error;
-    setServiceList(data || []);
-    setIsLoading(false);
+      if (userError) throw userError;
 
-    setErrorMessage("Error fetching services", error.message);
-    console.log("Error fetching services", error.message);
+      const user = userData.user;
+      if (!user) throw new Error("You must be signed in to view your services");
+
+      // Fetch services for that provider
+      const { data, error } = await supabase
+        .from("services")
+        .select("*")
+        .eq("provider_id", user.id);
+
+      if (error) throw error;
+      setServiceList(data || []);
+    } catch (error) {
+      setErrorMessage("Error fetching services", error.message);
+      console.log("Error fetching services", error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
-    fetchServices;
+    fetchServices();
   }, []);
 
   return (
     <div>
       <Header buttonLink="/create-service" buttonText="Create Service" />
 
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : errorMessage ? (
-          <p>Error fetching services...</p>
-          
-        ): serviceList === 0 ? (
-          <p>You do not have any bookings</p>
-
-        ) : (
-      <div className="min-h-screen p-4 bg-secondary-light">
-        <h1>Your Bookings</h1>
-        {serviceList.map((service) => (
-          <div key={service._id}>
-<h2>{service.service_name}</h2>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : errorMessage ? (
+        <p className="text-red-500">Error fetching services...</p>
+      ) : serviceList === 0 ? (
+        <p>You haven't created any services yet</p>
+      ) : (
+        <div className="min-h-screen p-4 bg-secondary-light ">
+          <h1 className="font-extrabold my-6 text-3xl md:text-4xl">Your Services</h1>
+          <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {serviceList.map((service) => (
+              <div
+                key={service.id}
+                className="bg-gradient-to-tr from-primary via-black to-secondary-dark text-white p-4 rounded-xl"
+              >
+                <h2 className="text-xl font-semibold mb-2">
+                  {service.service_name}
+                </h2>
+                <p className="mb-1">{service.description}</p>
+                <p className="text-sm">Duration: {service.duration} mins</p>
+                <p className="text-sm mb-3">Price: ${service.price}</p>
+                <button className="bg-secondary text-black font-semibold px-3 py-1 rounded hover:bg-secondary-dark">
+                  View Bookings
+                </button>
+              </div>
+            ))}
           </div>
-        ))}
-
-      </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };

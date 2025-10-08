@@ -60,17 +60,19 @@ const Home = () => {
                 key={service.id}
                 className="relative bg-gradient-to-tr from-primary via-black to-secondary-dark text-white p-4 rounded-xl"
               >
-                <span className="absolute right-3 top-2 font-semibold">
+                <span className="absolute right-3 top-2 font-semibold bg-primary rounded-lg py-1 px-2">
                   ${service.price}
                 </span>
-                <h3 className="font-bold text-2xl mb-2">
-                  {service.service_name}
-                </h3>
-                <p className="my-3">{service.description}</p>
-                <span className="font-light text-gray-100 text-shadow-md flex gap-1 items-center">
-                  {" "}
-                  <FaClock size={15} /> {service.duration} min.
-                </span>
+                <div className="">
+                  <h3 className="font-bold text-2xl mb-2 mt-6">
+                    {service.service_name}
+                  </h3>
+                  <p className="my-3">{service.description}</p>
+                  <span className="font-light text-gray-100 text-shadow-md flex gap-1 items-center">
+                    {" "}
+                    <FaClock size={15} /> {service.duration} min.
+                  </span>
+                </div>
                 <Link
                   to="/service-detail"
                   className="block text-primary-dark bg-secondary-light rounded-2xl text-center p-2 mt-2 font-bold w-2/3 mx-auto"
