@@ -5,7 +5,7 @@ import Home from "./Home";
 const CustomerDashboard = () => {
   return (
     <div className="bg-secondary-light">
-      <Header buttonLink="/" buttonText="Book Services" />
+      <Header buttonLink="/customer-bookings" buttonText="My Bookings" />
 
       <div className="min-h-screen p-4 bg-secondary-light">
         <Home />

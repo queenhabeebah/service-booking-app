@@ -61,8 +61,8 @@ const ServiceBooking = () => {
   return (
     <div className="min-h-screen bg-secondary-light ">
       <Header
-        buttonText={"Manage Your Bookings"}
-        buttonLink={"/customer-dashboard"}
+        buttonText={"My Bookings"}
+        buttonLink={"/customer-bookings"}
       />
       <h1 className="font-bold p-4 text-3xl">Book {service?.service_name}</h1>
       <div className="px-4 max-w-4/5 mx-auto md:flex md:justify-between md:items-center md:gap-5 md:max-w-full">

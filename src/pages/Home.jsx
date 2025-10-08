@@ -43,8 +43,8 @@ const Home = () => {
             Luxury Service Booking
           </h1>
 
-          <p className="text-2xl text-gray-100">
-            Book trusted services with ease
+          <p className="text-xl text-gray-100">
+            Book appointments with trusted professionals. Choose from our wide range of services and find the percte time that works for you.
           </p>
         </div>
       </section>
