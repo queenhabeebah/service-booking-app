@@ -8,8 +8,8 @@ import Signin from "./pages/Signin";
 import CreateService from "./pages/CreateService";
 import ProviderDashboard from "./pages/ProviderDashboard";
 import CustomerDashboard from "./pages/CustomerDashboard";
-import ServiceBooking from "./pages/ServiceBooking";
 
+import ServiceBooking from "./pages/ServiceBooking";
 
 const App = () => {
   return (

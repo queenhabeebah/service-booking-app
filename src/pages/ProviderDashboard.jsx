@@ -52,7 +52,7 @@ const ProviderDashboard = () => {
       ) : serviceList === 0 ? (
         <p>You haven't created any services yet</p>
       ) : (
-        <div className="min-h-screen p-4 bg-secondary-light ">
+        <div className="min-h-screen pt-30 p-4 bg-secondary-light ">
           <h1 className="font-extrabold my-6 text-3xl md:text-4xl">Your Services</h1>
           <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {serviceList.map((service) => (

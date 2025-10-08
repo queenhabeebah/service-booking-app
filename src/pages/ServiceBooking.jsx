@@ -64,7 +64,7 @@ const ServiceBooking = () => {
         buttonText={"My Bookings"}
         buttonLink={"/customer-bookings"}
       />
-      <h1 className="font-bold p-4 text-3xl">Book {service?.service_name}</h1>
+      <h1 className="font-bold pt-30 p-4 text-3xl">Book {service?.service_name}</h1>
       <div className="px-4 max-w-4/5 mx-auto md:flex md:justify-between md:items-center md:gap-5 md:max-w-full">
         <div className="relative bg-gradient-to-tr from-primary via-black to-secondary-dark text-white p-4 rounded-xl my-6 md:w-1/2 md:mr-4">
           <span className="absolute right-3 top-2 font-semibold bg-primary rounded-lg py-1 px-2">

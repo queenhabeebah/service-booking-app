@@ -57,21 +57,23 @@ const Home = () => {
 
           <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {serviceList.map((service) => (
-              <div
-                key={service.id}
-                className="relative bg-gradient-to-tr from-primary via-black to-secondary-dark text-white p-4 rounded-xl"
-              >
-                <span className="absolute right-3 top-2 font-semibold bg-primary rounded-lg py-1 px-2">
-                  ${service.price}
-                </span>
-                <div className="">
-                  <h3 className="font-bold text-2xl mb-2 mt-6">
-                    {service.service_name}
-                  </h3>
-                  <p className="my-3">{service.description}</p>
-                  <span className="font-light text-gray-100 text-shadow-md flex gap-1 items-center">
-                    <FaClock size={15} /> {service.duration} min.
+              <div>
+                <div
+                  key={service.id}
+                  className="relative bg-gradient-to-tr from-primary via-black to-secondary-dark text-white p-4 rounded-xl"
+                >
+                  <span className="absolute right-3 top-2 font-semibold bg-primary rounded-lg py-1 px-2">
+                    ${service.price}
                   </span>
+                  <div className="">
+                    <h3 className="font-bold text-2xl mb-2 mt-6">
+                      {service.service_name}
+                    </h3>
+                    <p className="my-3">{service.description}</p>
+                    <span className="font-light text-gray-100 text-shadow-md flex gap-1 items-center">
+                      <FaClock size={15} /> {service.duration} min.
+                    </span>
+                  </div>
                 </div>
                 <button
                   onClick={() => handleBookNow(service)}

@@ -7,7 +7,7 @@ const Layout = () => {
   return (
     <>
       <Header buttonLink="/signup" buttonText="Get Started"/>
-      <main className="min-h-screen p-4 bg-secondary-light">
+      <main className="min-h-screen pt-30 p-4 bg-secondary-light">
         <Outlet />
       </main>
       <Footer />
