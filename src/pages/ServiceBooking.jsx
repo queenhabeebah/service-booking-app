@@ -50,9 +50,10 @@ const ServiceBooking = () => {
       if (error) throw error;
       console.log("Booking successful:", data);
 
-      setMessage("🎉 You have successfully booked this service");
+      setMessage(alert("🎉 You have successfully booked this service"));
       setBookDate("");
       setBookTime("");
+      navigate("/bookings")
     } catch (error) {
       alert("Error:" + error.message);
     }
@@ -81,7 +82,7 @@ const ServiceBooking = () => {
         </div>
 
         <form onSubmit={handleBooking} className="md:w-1/2">
-          <label className="block mb-1">Select Date</label>
+          <label className="block mb-1 font-semibold">Select Date</label>
           <input
             type="date"
             value={bookDate}
@@ -91,7 +92,7 @@ const ServiceBooking = () => {
           />
 {bookDate && (
     <>
-    <label className="block mb-1">Select Time</label>
+    <label className="block mb-1 font-semibold">Select Time</label>
           <input
             type="time"
             value={bookTime}

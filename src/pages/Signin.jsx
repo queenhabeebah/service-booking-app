@@ -28,15 +28,17 @@ const Signin = () => {
 
     const user = data.user;
 
-    if (data.user) {
-      const {data: profile} = await supabase.from("profile").select("role").eq("id", data.user.id).single()
+    if (user) {
+      const { data: profile } = await supabase
+        .from("profile")
+        .select("role")
+        .eq("id", data.user.id)
+        .single();
 
-      if(profile?.role === "provider") {
+      if (profile?.role === "provider") {
         navigate("/provider-dashboard");
-        
-      } else{
+      } else {
         navigate("/customer-dashboard");
-
       }
     }
   };
