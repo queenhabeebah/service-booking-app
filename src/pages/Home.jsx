@@ -57,7 +57,7 @@ const Home = () => {
 
           <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {serviceList.map((service) => (
-              <div>
+              <div key={service.id}>
                 <div
                   key={service.id}
                   className="relative bg-gradient-to-tr from-primary via-black to-secondary-dark text-white p-4 rounded-xl"
@@ -73,14 +73,14 @@ const Home = () => {
                     <span className="font-light text-gray-100 text-shadow-md flex gap-1 items-center">
                       <FaClock size={15} /> {service.duration} min.
                     </span>
-                  </div>
-                </div>
                 <button
                   onClick={() => handleBookNow(service)}
-                  className="block text-primary-dark bg-secondary-light rounded-2xl text-center p-2 mt-2 font-bold w-2/3 mx-auto"
+                  className="block text-primary-dark bg-secondary-light rounded-2xl text-center p-2 mt-2 font-bold w-full mx-auto"
                 >
                   Book Now
                 </button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

@@ -14,9 +14,9 @@ const Header = ({ buttonText, buttonLink, profilePage }) => {
           >
             {buttonText}
           </Link>
-          <Link to={profilePage}>
+          {/* <Link to={profilePage}>
           <FaUser size={30} className="text-primary bg-secondary-dark p-1 h-10 w-10 rounded-[50%]"/>
-          </Link>
+          </Link> */}
         </div>
       </nav>
     </header>

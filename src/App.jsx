@@ -10,6 +10,7 @@ import ProviderDashboard from "./pages/ProviderDashboard";
 import CustomerDashboard from "./pages/CustomerDashboard";
 
 import ServiceBooking from "./pages/ServiceBooking";
+import Availability from "./pages/Availability";
 
 const App = () => {
   return (
@@ -23,6 +24,8 @@ const App = () => {
       <Route path="/signin" element={<Signin />} />
       <Route path="/create-service" element={<CreateService />} />
       <Route path="/service-booking/:id" element={<ServiceBooking />} />
+      <Route path="/availability/:id" element={<Availability />} />
+      
     </Routes>
   );
 };

@@ -18,7 +18,7 @@ const HeroText = () => {
         Luxury Service Booking
       </motion.h1>
       {sentences.map((sentence, index) => (
-        <div>
+        <div key={index}> 
           <motion.p
             key={index}
             className="text-sm md:text-lg text-gray-100"

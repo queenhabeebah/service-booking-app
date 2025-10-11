@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { supabase } from "../supabase-client";
+import { useNavigate } from "react-router-dom";
 
 const ProviderDashboard = () => {
+  const navigate = useNavigate();
+
   const [serviceList, setServiceList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,6 +44,10 @@ const ProviderDashboard = () => {
     fetchServices();
   }, []);
 
+  const handleAvailability = (service) => {
+    navigate(`/availability/${service.id}`, {state: {service}})
+  };
+
   return (
     <div>
       <Header buttonLink="/create-service" buttonText="Create Service" />
@@ -53,7 +60,9 @@ const ProviderDashboard = () => {
         <p>You haven't created any services yet</p>
       ) : (
         <div className="min-h-screen pt-30 p-4 bg-secondary-light ">
-          <h1 className="font-extrabold my-6 text-3xl md:text-4xl">Your Services</h1>
+          <h1 className="font-extrabold my-6 text-3xl md:text-4xl">
+            Your Services
+          </h1>
           <div className="mt-4 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {serviceList.map((service) => (
               <div
@@ -66,8 +75,8 @@ const ProviderDashboard = () => {
                 <p className="mb-1">{service.description}</p>
                 <p className="text-sm">Duration: {service.duration} mins</p>
                 <p className="text-sm mb-3">Price: ${service.price}</p>
-                <button className="bg-secondary text-black font-semibold px-3 py-1 rounded hover:bg-secondary-dark">
-                  View Bookings
+                <button onClick={() => handleAvailability(service)} className="bg-secondary text-black font-semibold px-3 py-1 rounded hover:bg-secondary-dark">
+                  Set Availability
                 </button>
               </div>
             ))}

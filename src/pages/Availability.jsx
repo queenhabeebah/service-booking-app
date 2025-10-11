@@ -9,20 +9,25 @@ const Availability = () => {
   const [availableDate, setAvailableDate] = useState("");
   const [availableStartTime, setAvailableStartTime] = useState("");
   const [availableEndTime, setAvailableEndTime] = useState("");
-  const [isBooked, setIsBooked] = useState(false);
-  const [message, setMessage] = useState("");
+  
 
   const handleAvailability = async (e) => {
     e.preventDefault();
-    setMessage("");
-
+    
     try {
-      const { userData, userError } = await supabase.auth.getUser();
+      const { data: userData, error: userError } =
+        await supabase.auth.getUser();
       if (userError) throw userError;
 
-      const user = userData.user;
+      const user = userData?.user;
       if (!user) {
         alert("You must be logged in as a provider to create availability");
+        return;
+      }
+
+      if (availableEndTime <= availableStartTime) {
+        alert("End time must be later than start time");
+        return;
       }
 
       const { data, error } = await supabase
@@ -34,13 +39,20 @@ const Availability = () => {
             available_date: availableDate,
             start_time: availableStartTime,
             end_time: availableEndTime,
-            is_booked: isBooked,
+            is_booked: false,
           },
         ])
         .select()
         .single();
+
       if (error) throw error;
-      alert("Availability updated:" + data);
+      alert("✅ Availability saved successfully!");
+      console.log("Saved availability:", data);
+
+      setAvailableDate("")
+      setAvailableStartTime("")
+      setAvailableEndTime("")
+  
     } catch (error) {
       alert("Error updating availability" + error.message);
     }
@@ -69,9 +81,7 @@ const Availability = () => {
               required
               className="border rounded p-2 w-full mb-4 focus:ring-2 focus:ring-primary"
             />
-            <label className="block mb-1 font-semibold">
-              Select End Time
-            </label>
+            <label className="block mb-1 font-semibold">Select End Time</label>
             <input
               type="time"
               value={availableEndTime}
@@ -86,10 +96,10 @@ const Availability = () => {
           type="submit"
           className="bg-primary text-white text-xl w-full mx-auto font-semibold p-2 my-3 rounded-xl hover:bg-secondary-dark"
         >
-          Confirm Booking
+          Save Availability
         </button>
       </form>
-      {message && <p className="mt-4 text-green-600">{message}</p>}
+      
     </div>
   );
 };
