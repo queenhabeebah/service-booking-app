@@ -45,7 +45,7 @@ const Signin = () => {
 
   return (
     <div className="bg-gradient-to-br from-primary-dark via-secondary to-secondary-dark p-10 min-h-screen">
-      <div className="text-primary-light bg-secondary-light rounded-2xl w-[70%] mx-auto text-center p-6 lg:w-[50%]">
+      <div className="text-primary-light bg-secondary-light rounded-2xl w-[100%] mx-auto text-center p-6 md:w-[70%] lg:w-[50%]">
         <h1 className="text-3xl font-bold mb-3">Welcome Back</h1>
         <p className="mb-5">Sign in to your account to continue</p>
         <form action="" onSubmit={handleSignin} className="p-2 text-left ">

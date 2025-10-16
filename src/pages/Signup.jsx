@@ -84,7 +84,7 @@ const Signup = () => {
 
   return (
     <div className="bg-gradient-to-br from-primary-dark via-secondary to-secondary-dark p-10 min-h-screen">
-      <div className="text-primary-light bg-secondary-light rounded-2xl w-[70%] mx-auto text-center p-6 lg:w-[50%]">
+      <div className="text-primary-light bg-secondary-light rounded-2xl w-[100%] mx-auto text-center p-6 md:w-[70%] lg:w-[50%]">
         <h1 className="text-3xl font-bold mb-3">Create Account</h1>
         <p className="mb-5">
           Join our platform to start booking or providing services
